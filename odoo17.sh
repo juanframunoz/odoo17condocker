@@ -70,9 +70,9 @@ services:
     image: postgres:15
     container_name: odoo17_db
     environment:
-      POSTGRES_DB=postgres
-      POSTGRES_USER=odoo
-      POSTGRES_PASSWORD=odoo
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
     volumes:
       - ./db-data:/var/lib/postgresql/data
 
@@ -107,6 +107,14 @@ volumes:
   certbot-etc:
   certbot-var:
 EOF
+
+# Validar configuración de Docker Compose
+echo "Validando el archivo docker-compose.yml..."
+docker-compose config
+if [ $? -ne 0 ]; then
+  echo "El archivo docker-compose.yml contiene errores. Revisa la configuración."
+  exit 1
+fi
 
 # Crear directorios para los datos persistentes
 mkdir -p odoo-web-data addons db-data nginx-conf certbot-etc certbot-var
