@@ -47,66 +47,64 @@ mkdir -p $PROJECT_DIR
 cd $PROJECT_DIR
 
 # Crear archivo docker-compose.yml
-cat <EOF > docker-compose.yml
-version: '3.8'
-
-services:
-  odoo:
-    image: odoo:17.0
-    container_name: odoo17_ce
-    depends_on:
-      - db
-    ports:
-      - "8069:8069"
-    volumes:
-      - ./odoo-web-data:/var/lib/odoo
-      - ./addons:/mnt/extra-addons
-    environment:
-      - HOST=db
-      - USER=odoo
-      - PASSWORD=odoo
-
-  db:
-    image: postgres:15
-    container_name: odoo17_db
-    environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: odoo
-      POSTGRES_PASSWORD: odoo
-    volumes:
-      - ./db-data:/var/lib/postgresql/data
-
-  nginx:
-    image: nginx:latest
-    container_name: odoo17_nginx
-    depends_on:
-      - odoo
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx-conf:/etc/nginx/conf.d
-      - ./certbot-etc:/etc/letsencrypt
-      - ./certbot-var:/var/lib/letsencrypt
-
-  certbot:
-    image: certbot/certbot
-    container_name: odoo17_certbot
-    volumes:
-      - ./certbot-etc:/etc/letsencrypt
-      - ./certbot-var:/var/lib/letsencrypt
-      - ./nginx-conf:/etc/nginx/conf.d
-    entrypoint: ["/bin/sh", "-c"]
-    command: "trap exit TERM; while :; do sleep 1 & wait $${!}; done"
-
-volumes:
-  odoo-web-data:
-  addons:
-  db-data:
-  nginx-conf:
-  certbot-etc:
-  certbot-var:
-EOF
+echo "version: '3.8'" > docker-compose.yml
+echo "" >> docker-compose.yml
+echo "services:" >> docker-compose.yml
+echo "  odoo:" >> docker-compose.yml
+echo "    image: odoo:17.0" >> docker-compose.yml
+echo "    container_name: odoo17_ce" >> docker-compose.yml
+echo "    depends_on:" >> docker-compose.yml
+echo "      - db" >> docker-compose.yml
+echo "    ports:" >> docker-compose.yml
+echo "      - \"8069:8069\"" >> docker-compose.yml
+echo "    volumes:" >> docker-compose.yml
+echo "      - ./odoo-web-data:/var/lib/odoo" >> docker-compose.yml
+echo "      - ./addons:/mnt/extra-addons" >> docker-compose.yml
+echo "    environment:" >> docker-compose.yml
+echo "      - HOST=db" >> docker-compose.yml
+echo "      - USER=odoo" >> docker-compose.yml
+echo "      - PASSWORD=odoo" >> docker-compose.yml
+echo "" >> docker-compose.yml
+echo "  db:" >> docker-compose.yml
+echo "    image: postgres:15" >> docker-compose.yml
+echo "    container_name: odoo17_db" >> docker-compose.yml
+echo "    environment:" >> docker-compose.yml
+echo "      POSTGRES_DB: postgres" >> docker-compose.yml
+echo "      POSTGRES_USER: odoo" >> docker-compose.yml
+echo "      POSTGRES_PASSWORD: odoo" >> docker-compose.yml
+echo "    volumes:" >> docker-compose.yml
+echo "      - ./db-data:/var/lib/postgresql/data" >> docker-compose.yml
+echo "" >> docker-compose.yml
+echo "  nginx:" >> docker-compose.yml
+echo "    image: nginx:latest" >> docker-compose.yml
+echo "    container_name: odoo17_nginx" >> docker-compose.yml
+echo "    depends_on:" >> docker-compose.yml
+echo "      - odoo" >> docker-compose.yml
+echo "    ports:" >> docker-compose.yml
+echo "      - \"80:80\"" >> docker-compose.yml
+echo "      - \"443:443\"" >> docker-compose.yml
+echo "    volumes:" >> docker-compose.yml
+echo "      - ./nginx-conf:/etc/nginx/conf.d" >> docker-compose.yml
+echo "      - ./certbot-etc:/etc/letsencrypt" >> docker-compose.yml
+echo "      - ./certbot-var:/var/lib/letsencrypt" >> docker-compose.yml
+echo "" >> docker-compose.yml
+echo "  certbot:" >> docker-compose.yml
+echo "    image: certbot/certbot" >> docker-compose.yml
+echo "    container_name: odoo17_certbot" >> docker-compose.yml
+echo "    volumes:" >> docker-compose.yml
+echo "      - ./certbot-etc:/etc/letsencrypt" >> docker-compose.yml
+echo "      - ./certbot-var:/var/lib/letsencrypt" >> docker-compose.yml
+echo "      - ./nginx-conf:/etc/nginx/conf.d" >> docker-compose.yml
+echo "    entrypoint: [\"/bin/sh\", \"-c\"]" >> docker-compose.yml
+echo "    command: \"trap exit TERM; while :; do sleep 1 & wait \$\${!}; done\"" >> docker-compose.yml
+echo "" >> docker-compose.yml
+echo "volumes:" >> docker-compose.yml
+echo "  odoo-web-data:" >> docker-compose.yml
+echo "  addons:" >> docker-compose.yml
+echo "  db-data:" >> docker-compose.yml
+echo "  nginx-conf:" >> docker-compose.yml
+echo "  certbot-etc:" >> docker-compose.yml
+echo "  certbot-var:" >> docker-compose.yml
 
 # Validar configuración de Docker Compose
 echo "Validando el archivo docker-compose.yml..."
