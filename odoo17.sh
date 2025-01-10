@@ -47,7 +47,7 @@ mkdir -p $PROJECT_DIR
 cd $PROJECT_DIR
 
 # Crear archivo docker-compose.yml
-cat <<EOF > docker-compose.yml
+cat <EOF > docker-compose.yml
 version: '3.8'
 
 services:
